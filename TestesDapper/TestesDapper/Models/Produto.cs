@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel;
 
 namespace TestesDapper.Models
 {
@@ -18,6 +13,15 @@ namespace TestesDapper.Models
         public string Descricao { get; set; }
 
         [DisplayName("Valor: ")]
-        public double Valor { get; set; }
+        public double? Valor { get; set; }
+
+        public int IdTipoProduto { get; set; }
+
+        public TipoProduto TipoProduto { get; set; }
+
+        public Produto()
+        {
+            TipoProduto = new TipoProduto();
+        }
     }
 }

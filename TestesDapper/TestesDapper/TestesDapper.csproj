@@ -191,16 +191,16 @@
     </Compile>
     <Compile Include="Models\Filters\ProdutoFilter.cs" />
     <Compile Include="Models\Produto.cs" />
+    <Compile Include="Models\TipoProduto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ProdutoRepository.cs" />
+    <Compile Include="Repositories\TipoProdutoRepository.cs" />
     <Compile Include="Services\ProdutoService.cs" />
+    <Compile Include="Services\TipoProdutoService.cs" />
     <Compile Include="Util\Util.cs" />
+    <Compile Include="Util\UtilWeb.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\LojaVirtual.mdf" />
-    <Content Include="App_Data\LojaVirtual_log.ldf">
-      <DependentUpon>LojaVirtual.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -315,6 +315,7 @@
     <Content Include="Views\Produto\Editar.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Filters\" />
   </ItemGroup>
   <ItemGroup>

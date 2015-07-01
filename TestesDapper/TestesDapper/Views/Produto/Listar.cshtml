@@ -19,6 +19,7 @@
         <tr>
             <th>Nome</th>
             <th>Descrição</th>
+            <th>Tipo Produto</th>
             <th>Valor</th>
             <th>Ações</th>
         </tr>
@@ -27,6 +28,7 @@
             <tr>
                 <td>@Html.Raw(produto.Nome)</td>
                 <td>@Html.Raw(TestesDapper.Util.Util.TruncaTexto(produto.Descricao))</td>
+                <td>@Html.Raw(produto.TipoProduto.Nome)</td>
                 <td>@Html.Raw(produto.Valor)</td>
                 <td>
                     @Html.ActionLink("Editar", "Editar", "Produto", new { Id = produto.Id }, null)

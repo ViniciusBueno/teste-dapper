@@ -11,17 +11,14 @@ namespace TestesDapper.Controllers
 {
     public class ProdutoController : Controller
     {
-        ProdutoService produtoService;
-
-        public ProdutoController()
-        {
-            produtoService = new ProdutoService();
-        }
+        ProdutoService produtoService = new ProdutoService();
+        TipoProdutoService tipoProdutoService = new TipoProdutoService();
 
         public ActionResult Listar()
         {
             var produtoFilter = new ProdutoFilter();
-            var produtos = produtoService.Listar(produtoFilter.Produto);
+            //var produtos = produtoService.Listar(produtoFilter.Produto);
+            var produtos = produtoService.ListarComRelacionamentosDeFilhos(produtoFilter.Produto);
 
             produtoFilter.Produtos = produtos;
 
@@ -31,7 +28,8 @@ namespace TestesDapper.Controllers
         [HttpPost]
         public ActionResult Listar(ProdutoFilter produtoFilter)
         {
-            var produtos = produtoService.Listar(produtoFilter.Produto);
+            //var produtos = produtoService.Listar(produtoFilter.Produto);
+            var produtos = produtoService.ListarComRelacionamentosDeFilhos(produtoFilter.Produto);
 
             produtoFilter.Produtos = produtos;
 
@@ -40,7 +38,10 @@ namespace TestesDapper.Controllers
 
         public ActionResult Incluir()
         {
-            var produtoFilter = new ProdutoFilter();
+            var produtoFilter = new ProdutoFilter
+            {
+                TipoProdutos = tipoProdutoService.Listar(new TipoProduto())
+            };
 
             return View("Editar", produtoFilter);
         }
@@ -62,7 +63,8 @@ namespace TestesDapper.Controllers
 
             var produtoFilter = new ProdutoFilter
             {
-                Produto = produtoService.Buscar(produto)
+                Produto = produtoService.Buscar(produto),
+                TipoProdutos = tipoProdutoService.Listar(new TipoProduto())
             };
 
             return View(produtoFilter);

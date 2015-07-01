@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 
@@ -8,6 +9,11 @@ namespace TestesDapper.Util
     public static class Util
     {
         public const string indicadorDeTruncamentoDeTexto = "...";
+
+        public static string BuscaStringConexaoBanco()
+        {
+            return ConfigurationManager.ConnectionStrings["LojaVirtual"].ToString();
+        }
 
         public static string TruncaTexto(string texto, int ultimaPosicaoParaMostrada = 50)
         {

@@ -11,13 +11,16 @@
 {
     @Html.HiddenFor(p => p.Produto.Id)
     @Html.LabelFor(p => p.Produto.Nome)
-    @Html.TextBoxFor(p => p.Produto.Nome)
+    @Html.TextBoxFor(p => p.Produto.Nome, new { maxlength = 50 })
     <br />
     @Html.LabelFor(p => p.Produto.Descricao)
-    @Html.TextBoxFor(p => p.Produto.Descricao, new { maxlength = 50 })
+    @Html.TextAreaFor(p => p.Produto.Descricao, new { rows = 5, cols = 15, maxlength = 150, style = "width: 300px;" })
+    <br />
+    @Html.LabelFor(p => p.Produto.TipoProduto)
+    @Html.DropDownListFor(p => p.Produto.IdTipoProduto, TestesDapper.Util.UtilWeb.MontaLista(Model.TipoProdutos), string.Empty, new { style = "width: 310px;" })
     <br />
     @Html.LabelFor(p => p.Produto.Valor)
-    @Html.TextBoxFor(p => p.Produto.Valor, new { maxlength = 150 })
+    @Html.TextBoxFor(p => p.Produto.Valor)
     <br />
     <br />
     <button type="submit">@Html.Raw(nomePagina)</button>
