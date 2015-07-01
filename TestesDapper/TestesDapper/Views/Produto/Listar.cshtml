@@ -1,0 +1,45 @@
+﻿@model TestesDapper.Models.Filters.ProdutoFilter
+@{
+    ViewBag.Title = "Listar Produto";
+}
+@using (Html.BeginForm("Listar", "Produto", FormMethod.Post))
+{
+    <h2>@Html.Raw(ViewBag.Title)</h2>
+    <br />
+    @Html.LabelFor(p => p.Produto.Nome)
+    @Html.TextBoxFor(p => p.Produto.Nome)
+    <br />
+    <br />
+    <button type="submit">Pesquisar</button>
+    <br />
+    <br />
+    @Html.ActionLink("Incluir", "Incluir", "Produto", new { Id = Model.Produto.Id })
+    <br />
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Valor</th>
+            <th>Ações</th>
+        </tr>
+        @foreach (var produto in Model.Produtos)
+        {
+            <tr>
+                <td>@Html.Raw(produto.Nome)</td>
+                <td>@Html.Raw(TestesDapper.Util.Util.TruncaTexto(produto.Descricao))</td>
+                <td>@Html.Raw(produto.Valor)</td>
+                <td>
+                    @Html.ActionLink("Editar", "Editar", "Produto", new { Id = produto.Id }, null)
+                    @Html.Raw("  |  ")
+                    @Html.ActionLink("Deletar", "Excluir", "Produto", new { Id = produto.Id }, null)
+                </td>
+            </tr>
+        }
+        @if (Model.Produtos.Count == 0)
+        {
+            <tr>
+                <td colspan="4">@Html.Raw("Não foram encontrados produtos.")</td>
+            </tr>
+        }
+    </table>
+}

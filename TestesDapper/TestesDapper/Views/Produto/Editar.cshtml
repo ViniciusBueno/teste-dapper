@@ -1,0 +1,24 @@
+﻿@model TestesDapper.Models.Filters.ProdutoFilter
+@{
+    var edicao = Model.Produto.Id.HasValue;
+    var nomePagina = (edicao ? "Editar" : "Incluir");
+
+    ViewBag.Title = nomePagina + "Produto";
+}
+<h2>@Html.Raw(nomePagina)</h2>
+<br />
+@using (Html.BeginForm(nomePagina, "Produto", FormMethod.Post))
+{
+    @Html.HiddenFor(p => p.Produto.Id)
+    @Html.LabelFor(p => p.Produto.Nome)
+    @Html.TextBoxFor(p => p.Produto.Nome)
+    <br />
+    @Html.LabelFor(p => p.Produto.Descricao)
+    @Html.TextBoxFor(p => p.Produto.Descricao, new { maxlength = 50 })
+    <br />
+    @Html.LabelFor(p => p.Produto.Valor)
+    @Html.TextBoxFor(p => p.Produto.Valor, new { maxlength = 150 })
+    <br />
+    <br />
+    <button type="submit">@Html.Raw(nomePagina)</button>
+}
