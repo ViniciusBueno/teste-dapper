@@ -14,6 +14,7 @@ namespace TestesDapper.Models.Filters
         {
             Produto = new Produto();
             Produtos = new List<Produto>();
+            TipoProdutos = new List<TipoProduto>();
         }
     }
 }

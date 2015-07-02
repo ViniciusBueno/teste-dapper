@@ -2,13 +2,8 @@
 
 namespace TestesDapper.Models
 {
-    public class Produto
+    public class Produto : BaseModel
     {
-        public int? Id { get; set; }
-
-        [DisplayName("Nome: ")]
-        public string Nome { get; set; }
-
         [DisplayName("Descrição: ")]
         public string Descricao { get; set; }
 

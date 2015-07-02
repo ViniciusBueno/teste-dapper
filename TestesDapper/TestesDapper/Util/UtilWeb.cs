@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using TestesDapper.Models;
 
@@ -9,13 +6,21 @@ namespace TestesDapper.Util
 {
     public static class UtilWeb
     {
-        public static List<SelectListItem> MontaLista(List<TipoProduto> elementos)
+        public static List<SelectListItem> MontaLista(List<BaseModel> elementos)
         {
+            SelectListItem selectListItem;
+
             var listaItens = new List<SelectListItem>();
 
             foreach (var elemento in elementos)
             {
-                listaItens.Add(new SelectListItem { Text = elemento.Nome, Value = elemento.Id.ToString() });
+                selectListItem = new SelectListItem
+                {
+                    Text = elemento.Nome,
+                    Value = elemento.Id.ToString()
+                };
+
+                listaItens.Add(selectListItem);
             }
 
             return listaItens;

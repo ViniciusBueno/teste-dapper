@@ -3,12 +3,8 @@
 namespace TestesDapper.Models
 {
     [DisplayName("Tipo Produto: ")]
-    public class TipoProduto
+    public class TipoProduto : BaseModel
     {
-        public int? Id { get; set; }
-
-        public string Nome { get; set; }
-
         public string Descricao { get; set; }
     }
 }

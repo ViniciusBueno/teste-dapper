@@ -1,18 +1,15 @@
-﻿using System;
+﻿using Dapper;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Dapper;
 using System.Data.SqlClient;
-using System.Configuration;
-using TestesDapper.Models;
+using System.Linq;
 using System.Text;
+using TestesDapper.Models;
 
 namespace TestesDapper.Repositories
 {
     public class TipoProdutoRepository
     {
-        SqlConnection con = new SqlConnection(TestesDapper.Util.Util.BuscaStringConexaoBanco());
+        SqlConnection con = TestesDapper.Util.Util.BuscaObjetoConexaoBanco();
 
         public List<TipoProduto> Listar(TipoProduto tipoProduto)
         {

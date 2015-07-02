@@ -189,6 +189,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Filters\ProdutoFilter.cs" />
     <Compile Include="Models\Produto.cs" />
     <Compile Include="Models\TipoProduto.cs" />
@@ -258,6 +259,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="ScriptsBaseDados\CriacaoBase.sql" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

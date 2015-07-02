@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using TestesDapper.Models;
 using TestesDapper.Models.Filters;
 using TestesDapper.Services;
@@ -17,7 +13,7 @@ namespace TestesDapper.Controllers
         public ActionResult Listar()
         {
             var produtoFilter = new ProdutoFilter();
-            //var produtos = produtoService.Listar(produtoFilter.Produto);
+
             var produtos = produtoService.ListarComRelacionamentosDeFilhos(produtoFilter.Produto);
 
             produtoFilter.Produtos = produtos;
@@ -28,7 +24,6 @@ namespace TestesDapper.Controllers
         [HttpPost]
         public ActionResult Listar(ProdutoFilter produtoFilter)
         {
-            //var produtos = produtoService.Listar(produtoFilter.Produto);
             var produtos = produtoService.ListarComRelacionamentosDeFilhos(produtoFilter.Produto);
 
             produtoFilter.Produtos = produtos;

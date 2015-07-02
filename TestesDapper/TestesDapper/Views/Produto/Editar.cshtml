@@ -1,4 +1,5 @@
-﻿@model TestesDapper.Models.Filters.ProdutoFilter
+﻿@using TestesDapper.Models;
+@model TestesDapper.Models.Filters.ProdutoFilter
 @{
     var edicao = Model.Produto.Id.HasValue;
     var nomePagina = (edicao ? "Editar" : "Incluir");
@@ -17,7 +18,7 @@
     @Html.TextAreaFor(p => p.Produto.Descricao, new { rows = 5, cols = 15, maxlength = 150, style = "width: 300px;" })
     <br />
     @Html.LabelFor(p => p.Produto.TipoProduto)
-    @Html.DropDownListFor(p => p.Produto.IdTipoProduto, TestesDapper.Util.UtilWeb.MontaLista(Model.TipoProdutos), string.Empty, new { style = "width: 310px;" })
+    @Html.DropDownListFor(p => p.Produto.IdTipoProduto, TestesDapper.Util.UtilWeb.MontaLista(Model.TipoProdutos.ToList<BaseModel>()), string.Empty, new { style = "width: 310px;" })
     <br />
     @Html.LabelFor(p => p.Produto.Valor)
     @Html.TextBoxFor(p => p.Produto.Valor)
