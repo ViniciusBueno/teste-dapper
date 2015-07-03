@@ -8,10 +8,10 @@ namespace TestesDapper.Services
     {
         ProdutoRepository produtoRepository = new ProdutoRepository();
 
-        public List<Produto> Listar(Produto produto)
-        {
-            return produtoRepository.Listar(produto);
-        }
+        //public List<Produto> Listar(Produto produto)
+        //{
+        //    return produtoRepository.Listar(produto);
+        //}
 
         public List<Produto> ListarComRelacionamentosDeFilhos(Produto produto)
         {

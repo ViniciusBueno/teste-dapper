@@ -11,28 +11,28 @@ namespace TestesDapper.Repositories
     {
         SqlConnection con = TestesDapper.Util.Util.BuscaObjetoConexaoBanco();
 
-        public List<Produto> Listar(Produto produto)
-        {
-            var sqlCommand = new StringBuilder();
-            sqlCommand.Append(" SELECT");
-            sqlCommand.Append("     Id,");
-            sqlCommand.Append("     Nome,");
-            sqlCommand.Append("     Descricao,");
-            sqlCommand.Append("     Valor,");
-            sqlCommand.Append("     IdTipoProduto");
-            sqlCommand.Append(" FROM");
-            sqlCommand.Append("     Produto");
+        //public List<Produto> Listar(Produto produto)
+        //{
+        //    var sqlCommand = new StringBuilder();
+        //    sqlCommand.Append(" SELECT");
+        //    sqlCommand.Append("     Id,");
+        //    sqlCommand.Append("     Nome,");
+        //    sqlCommand.Append("     Descricao,");
+        //    sqlCommand.Append("     Valor,");
+        //    sqlCommand.Append("     IdTipoProduto");
+        //    sqlCommand.Append(" FROM");
+        //    sqlCommand.Append("     Produto");
 
-            if (!string.IsNullOrEmpty(produto.Nome))
-            {
-                sqlCommand.Append(" WHERE");
-                sqlCommand.Append("     Nome like '%' + @Nome + '%'");
-            }
+        //    if (!string.IsNullOrEmpty(produto.Nome))
+        //    {
+        //        sqlCommand.Append(" WHERE");
+        //        sqlCommand.Append("     Nome like '%' + @Nome + '%'");
+        //    }
 
-            var produtos = con.Query<Produto>(sqlCommand.ToString(), produto);
+        //    var produtos = con.Query<Produto>(sqlCommand.ToString(), produto);
 
-            return produtos.ToList();
-        }
+        //    return produtos.ToList();
+        //}
 
         public List<Produto> ListarComRelacionamentosDeFilhos(Produto produto)
         {
@@ -51,13 +51,20 @@ namespace TestesDapper.Repositories
             sqlCommand.Append(" INNER JOIN");
             sqlCommand.Append("     TipoProduto tp on tp.Id = p.IdTipoProduto");
 
+            if (!string.IsNullOrEmpty(produto.Nome))
+            {
+                sqlCommand.Append(" WHERE");
+                sqlCommand.Append("     p.Nome like '%' + @Nome + '%'");
+            }
+
             // Se as chaves forem diferentes de Id, que é o valor default que o Dapper assume,
             // usar splitOn para informar a coluna.
             var produtos =
                 con.Query<Produto, TipoProduto, Produto>(
                         sqlCommand.ToString(),
                         (p, tp) => { p.TipoProduto = tp; return p; },
-                        splitOn: "IdTipoProduto");
+                        splitOn: "IdTipoProduto",
+                        param: produto);
 
             return produtos.ToList();
         }
