@@ -6,6 +6,17 @@
 
     ViewBag.Title = nomePagina + "Produto";
 }
+<script>
+    $(document).ready(function () {
+        $("#btnVoltar").click(function () {
+            voltar();
+        });
+    });
+
+    function voltar() {
+        window.location = "..@Url.Action("Listar", "Produto")";
+    }
+</script>
 <h2>@Html.Raw(nomePagina)</h2>
 <br />
 @using (Html.BeginForm(nomePagina, "Produto", FormMethod.Post))
@@ -25,4 +36,5 @@
     <br />
     <br />
     <button type="submit">@Html.Raw(nomePagina)</button>
+    <button id="btnVoltar" type="button">Voltar</button>
 }

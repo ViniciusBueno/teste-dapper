@@ -7,10 +7,8 @@ using TestesDapper.Models;
 
 namespace TestesDapper.Repositories
 {
-    public class TipoProdutoRepository
+    public class TipoProdutoRepository : BaseRepository
     {
-        SqlConnection con = TestesDapper.Util.Util.BuscaObjetoConexaoBanco();
-
         public List<TipoProduto> Listar(TipoProduto tipoProduto)
         {
             var sqlCommand = new StringBuilder();
@@ -21,9 +19,12 @@ namespace TestesDapper.Repositories
             sqlCommand.Append(" FROM");
             sqlCommand.Append("     TipoProduto");
 
-            var TipoProdutos = con.Query<TipoProduto>(sqlCommand.ToString());
+            using (var connection = BuscaObjetoConexaoBanco())
+            {
+                var TipoProdutos = connection.Query<TipoProduto>(sqlCommand.ToString());
 
-            return TipoProdutos.ToList();
+                return TipoProdutos.ToList();
+            }
         }
     }
 }

@@ -2,6 +2,13 @@
 @{
     ViewBag.Title = "Listar Produto";
 }
+<script>
+    $(document).ready(function () {
+        $("#btnLimpar").click(function () {
+            limpar();
+        });
+    });
+</script>
 @using (Html.BeginForm("Listar", "Produto", FormMethod.Post))
 {
     <h2>@Html.Raw(ViewBag.Title)</h2>
@@ -11,6 +18,7 @@
     <br />
     <br />
     <button type="submit">Pesquisar</button>
+    <button id="btnLimpar" type="button">Limpar</button>
     <br />
     <br />
     @Html.ActionLink("Incluir", "Incluir", "Produto", new { Id = Model.Produto.Id })

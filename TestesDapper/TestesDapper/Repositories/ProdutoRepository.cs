@@ -7,35 +7,40 @@ using TestesDapper.Models;
 
 namespace TestesDapper.Repositories
 {
-    public class ProdutoRepository
+    public class ProdutoRepository : BaseRepository
     {
-        SqlConnection con = TestesDapper.Util.Util.BuscaObjetoConexaoBanco();
+        public List<Produto> Listar(Produto produto)
+        {
+            var sqlCommand = new StringBuilder();
+            sqlCommand.Append(" SELECT");
+            sqlCommand.Append("     Id,");
+            sqlCommand.Append("     Nome,");
+            sqlCommand.Append("     Descricao,");
+            sqlCommand.Append("     Valor,");
+            sqlCommand.Append("     IdTipoProduto");
+            sqlCommand.Append(" FROM");
+            sqlCommand.Append("     Produto");
 
-        //public List<Produto> Listar(Produto produto)
-        //{
-        //    var sqlCommand = new StringBuilder();
-        //    sqlCommand.Append(" SELECT");
-        //    sqlCommand.Append("     Id,");
-        //    sqlCommand.Append("     Nome,");
-        //    sqlCommand.Append("     Descricao,");
-        //    sqlCommand.Append("     Valor,");
-        //    sqlCommand.Append("     IdTipoProduto");
-        //    sqlCommand.Append(" FROM");
-        //    sqlCommand.Append("     Produto");
+            if (!string.IsNullOrEmpty(produto.Nome))
+            {
+                sqlCommand.Append(" WHERE");
+                sqlCommand.Append("     Nome like '%' + @Nome + '%'");
+            }
 
-        //    if (!string.IsNullOrEmpty(produto.Nome))
-        //    {
-        //        sqlCommand.Append(" WHERE");
-        //        sqlCommand.Append("     Nome like '%' + @Nome + '%'");
-        //    }
+            sqlCommand.Append(" ORDER BY");
+            sqlCommand.Append("     p.Nome");
 
-        //    var produtos = con.Query<Produto>(sqlCommand.ToString(), produto);
+            using (var connection = BuscaObjetoConexaoBanco())
+            {
+                var produtos = connection.Query<Produto>(sqlCommand.ToString(), produto);
 
-        //    return produtos.ToList();
-        //}
+                return produtos.ToList();
+            }
+        }
 
         public List<Produto> ListarComRelacionamentosDeFilhos(Produto produto)
         {
+
             var sqlCommand = new StringBuilder();
             sqlCommand.Append(" SELECT");
             sqlCommand.Append("     p.Id,");
@@ -49,7 +54,7 @@ namespace TestesDapper.Repositories
             sqlCommand.Append(" FROM");
             sqlCommand.Append("     Produto p");
             sqlCommand.Append(" INNER JOIN");
-            sqlCommand.Append("     TipoProduto tp on tp.Id = p.IdTipoProduto");
+            sqlCommand.Append("     TipoProduto tp ON tp.Id = p.IdTipoProduto");
 
             if (!string.IsNullOrEmpty(produto.Nome))
             {
@@ -57,16 +62,22 @@ namespace TestesDapper.Repositories
                 sqlCommand.Append("     p.Nome like '%' + @Nome + '%'");
             }
 
-            // Se as chaves forem diferentes de Id, que é o valor default que o Dapper assume,
-            // usar splitOn para informar a coluna.
-            var produtos =
-                con.Query<Produto, TipoProduto, Produto>(
-                        sqlCommand.ToString(),
-                        (p, tp) => { p.TipoProduto = tp; return p; },
-                        splitOn: "IdTipoProduto",
-                        param: produto);
+            sqlCommand.Append(" ORDER BY");
+            sqlCommand.Append("     p.Nome");
 
-            return produtos.ToList();
+            using (var connection = BuscaObjetoConexaoBanco())
+            {
+                // Se as chaves forem diferentes de Id, que é o valor default que o Dapper assume,
+                // usar splitOn para informar a coluna.
+                var produtos =
+                    connection.Query<Produto, TipoProduto, Produto>(
+                            sqlCommand.ToString(),
+                            (p, tp) => { p.TipoProduto = tp; return p; },
+                            splitOn: "IdTipoProduto",
+                            param: produto);
+
+                return produtos.ToList();
+            }
         }
 
         public Produto Buscar(Produto produto)
@@ -83,20 +94,37 @@ namespace TestesDapper.Repositories
             sqlCommand.Append(" WHERE");
             sqlCommand.Append("     Id = @Id");
 
-            var produtoBuscado = con.Query<Produto>(sqlCommand.ToString(), produto).FirstOrDefault();
+            using (var connection = BuscaObjetoConexaoBanco())
+            {
+                var produtoBuscado = connection.Query<Produto>(sqlCommand.ToString(), produto).FirstOrDefault();
 
-            return produtoBuscado;
+                return produtoBuscado;
+            }
         }
 
         public void Incluir(Produto produto)
         {
             var sqlCommand = new StringBuilder();
             sqlCommand.Append(" INSERT INTO");
-            sqlCommand.Append("     Produto (Nome, Descricao, Valor, IdTipoProduto)");
+            sqlCommand.Append("     Produto");
+            sqlCommand.Append("     (");
+            sqlCommand.Append("         Nome,");
+            sqlCommand.Append("         Descricao,");
+            sqlCommand.Append("         Valor,");
+            sqlCommand.Append("         IdTipoProduto");
+            sqlCommand.Append("     )");
             sqlCommand.Append(" VALUES");
-            sqlCommand.Append("     (@Nome, @Descricao, @Valor, @IdTipoProduto)");
+            sqlCommand.Append("     (");
+            sqlCommand.Append("         @Nome,");
+            sqlCommand.Append("         @Descricao,");
+            sqlCommand.Append("         @Valor,");
+            sqlCommand.Append("         @IdTipoProduto");
+            sqlCommand.Append("     )");
 
-            con.Execute(sqlCommand.ToString(), produto);
+            using (var connection = BuscaObjetoConexaoBanco())
+            {
+                connection.Execute(sqlCommand.ToString(), produto);
+            }
         }
 
         public void Editar(Produto produto)
@@ -112,7 +140,10 @@ namespace TestesDapper.Repositories
             sqlCommand.Append(" WHERE");
             sqlCommand.Append("     Id = @Id");
 
-            con.Execute(sqlCommand.ToString(), produto);
+            using (var connection = BuscaObjetoConexaoBanco())
+            {
+                connection.Execute(sqlCommand.ToString(), produto);
+            }
         }
 
         public void Excluir(Produto produto)
@@ -123,7 +154,10 @@ namespace TestesDapper.Repositories
             sqlCommand.Append(" WHERE");
             sqlCommand.Append("     Id = @Id");
 
-            con.Execute(sqlCommand.ToString(), produto);
+            using (var connection = BuscaObjetoConexaoBanco())
+            {
+                connection.Execute(sqlCommand.ToString(), produto);
+            }
         }
     }
 }
