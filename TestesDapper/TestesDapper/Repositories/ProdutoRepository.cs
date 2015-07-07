@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using TestesDapper.Models;
@@ -9,38 +8,37 @@ namespace TestesDapper.Repositories
 {
     public class ProdutoRepository : BaseRepository
     {
-        public List<Produto> Listar(Produto produto)
-        {
-            var sqlCommand = new StringBuilder();
-            sqlCommand.Append(" SELECT");
-            sqlCommand.Append("     Id,");
-            sqlCommand.Append("     Nome,");
-            sqlCommand.Append("     Descricao,");
-            sqlCommand.Append("     Valor,");
-            sqlCommand.Append("     IdTipoProduto");
-            sqlCommand.Append(" FROM");
-            sqlCommand.Append("     Produto");
+        //public List<Produto> Listar(Produto produto)
+        //{
+        //    var sqlCommand = new StringBuilder();
+        //    sqlCommand.Append(" SELECT");
+        //    sqlCommand.Append("     Id,");
+        //    sqlCommand.Append("     Nome,");
+        //    sqlCommand.Append("     Descricao,");
+        //    sqlCommand.Append("     Valor,");
+        //    sqlCommand.Append("     IdTipoProduto");
+        //    sqlCommand.Append(" FROM");
+        //    sqlCommand.Append("     Produto");
 
-            if (!string.IsNullOrEmpty(produto.Nome))
-            {
-                sqlCommand.Append(" WHERE");
-                sqlCommand.Append("     Nome like '%' + @Nome + '%'");
-            }
+        //    if (!string.IsNullOrEmpty(produto.Nome))
+        //    {
+        //        sqlCommand.Append(" WHERE");
+        //        sqlCommand.Append("     Nome like '%' + @Nome + '%'");
+        //    }
 
-            sqlCommand.Append(" ORDER BY");
-            sqlCommand.Append("     p.Nome");
+        //    sqlCommand.Append(" ORDER BY");
+        //    sqlCommand.Append("     p.Nome");
 
-            using (var connection = BuscaObjetoConexaoBanco())
-            {
-                var produtos = connection.Query<Produto>(sqlCommand.ToString(), produto);
+        //    using (var connection = BuscaObjetoConexaoBanco())
+        //    {
+        //        var produtos = connection.Query<Produto>(sqlCommand.ToString(), produto);
 
-                return produtos.ToList();
-            }
-        }
+        //        return produtos.ToList();
+        //    }
+        //}
 
         public List<Produto> ListarComRelacionamentosDeFilhos(Produto produto)
         {
-
             var sqlCommand = new StringBuilder();
             sqlCommand.Append(" SELECT");
             sqlCommand.Append("     p.Id,");
