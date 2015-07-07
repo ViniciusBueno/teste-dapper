@@ -2,7 +2,7 @@
 Projeto de estudo para aprender a utilizar o Dapper.
 
 # Considerações
-- Este projeto está sendo desenvolvido usando o Visual Studio 2013 e Sql Server 2012.
+- Este projeto está sendo desenvolvido em ASP.NET MVC, C# e Dapper usando o Visual Studio 2013 e Sql Server 2012.
 
 # Procedimentos para a execução da aplicação
 - Executar o arquivo "teste-dapper/TestesDapper/TestesDapper/ScriptsBaseDados/CriacaoBase.sql" no seu banco de dados.
